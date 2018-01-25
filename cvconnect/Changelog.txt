@@ -1,0 +1,44 @@
+V. 0.9 
+- First published version. 
+(Still needed to add things, which is why 0.9 was chosen. The 0.9.x denotes small changes or different days, with 9.x.y with y being changes that day or very minor tweaks). 
+
+V 0.9.1
+- Set CV Itinerary button to only show on CV Itinerary view
+- Set functions to only occur on the views that we need them to. 
+- Created ability to set reservation day based on the reservation date that is selected. 
+
+V 0.9.2
+- For Campus Visit Reservation view, setting VISIT TYPE also sets the ARRIVAL TIME
+- For Evaluation and Endorsement view, entering a name for E-E1 or E-E2 populates the current date. 
+- For HS Transcript/Guidance Counselor View, updating the High School name copies the value to High School Transcript Name. 
+- For Dec of Intent View, sets fee amount if fee date is set. 
+- Change name from "Berea CV Connect Autofill" to "Berea College Connect Autofill"
+
+v 0.9.3
+- Cleaned up/condensed some code and functions. 
+
+V 0.9.3.1 & V 0.9.3.2
+- Minor tweak to prevent keypress/preventdefault for dates. 
+
+v 0.9.4
+- Added about page and Browser icon/button. 
+
+v 0.9.4.1
+- Added Class rank percentile calculation and populating percentile date to HS Transcript/Guidance Counselor View. 
+- Updated about page to include link to changelog
+- (BETA) Added Interview Score Field Color Test just for "Jacob Patton"
+
+v 0.9.4.2
+- For GED, if HS Transcript Name is GED, once a percentile is entered, it clears Class Rank Info and sets the percentile as Not Required. 
+
+V 0.9.4.3 - 0.9.4.5
+- Added International Apps Processing function
+- Forgot to add about.html file to updload. 
+- Interview Score Check removed from Beta and set for all users. 
+
+V0.9.5
+- Modified icon and background script. 
+- Icon modified to be more visible text and accomodate grey/color
+- About page only shows if logged into Berea Connect, otherwise a log in message appears when the icon is clicked. 
+- For Evaluation and endorsment view, it copies the name to the shadow attribute and makes the field read only. 
+- Checks to see if all required fields exist so the program doesn't crash. If it is unable to find a field multiple times, it shows and error. 

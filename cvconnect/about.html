@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Berea Connect Autofill About Page</title>
+<link rel="stylesheet" href="about.css">
+  
+</head>
+
+<body style="padding:0px;margin:0px">
+<div id="bcHeader" style="width:100%; min-height:80px; border-top: 4px solid #c75b12;background-image:url(images/bg_texture.png);background-repeat: repeat; background-position: top left;	background-attachment: scroll; font-size:12px;">
+  <div id="bcRibbon" style="float:left; margin-left:45px;; width:230px;height: 145px; background-repeat:no-repeat;background-position: bottom center;background-image:url(images/bc-ribbon.png)">
+    <div id="bcLogo" style="
+	background-image: url(images/bc-logo-stacked.svg);
+	background-size: contain;
+	margin: auto;
+	margin-top:0px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 160px;	
+	height: 112px;"> </div>
+  </div>
+  <div id="bcTextWrapper">
+<div id="bcText" style="font-family:Open Sans Condensed,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; color:#005a8b;float:right; font-size:2.2em; margin-right:45px;padding-bottom:20px; padding-top:20px;">
+    Admissions Connect Autofill</div>
+    </div>
+</div>
+<!--PUT CONTENT HERE-->
+<div id="MainArea">
+<h1>About </h1>
+<p>The Berea College Connect Autofill extension for Firefox and Chrome was created to improve various processes within Admissions and reduce data entry errors. Currently it is maintained by Jacob Patton in the Office of Admissions. For questions or comments, please email <a href="mailto:jacob_patton@berea.edu">jacob_patton@berea.edu</a><br />
+</p>
+<p>The functions below are based on the view in Connect and use watch for certain attributes to be available. Renaming a view or removing fields from the view may negatively impact the extension and cause parts of it not to work. This should show an error alert box. However, if a view is slow to load, this may also trigger the error alert box. </p>
+<h1>Functions</h1>
+<p>Below is a list of everything that the extension currently does.</p>
+<dl>
+<dt>Campus Visit Itinerary</dt>
+<dd>- Creates a button that allows the visit type (morning, mid-day, or afternoon) and activities to be automatically populated or cleared.</dd>
+<dt>Campus Visit Reservation</dt>
+<dd>- When the "Visit Date" is set, the correct "Visit Date" is selected. Clicking on the field will ask if you want to clear it, which would also clear the &quot;Visit Day&quot;. Must use the date picker to set the date. </dd>
+<dd>- When "Visit Type" is selected, the correct "Arrival Time" is populated or cleared. </dd>
+<dt>HS Transcript / Counselor Evaluation Form</dt>
+<dd>- Data that is entered into the "High School Name" field, this is automatically. copied to the "High School Transcript Name" field. While &quot;High School Transcript Name&quot; can be updated without changing &quot;High School Name&quot;, any changes to &quot;High School Name&quot; will overwrite these changes. </dd>
+<dd>- When the "Class Rank", "Class Size", or "Real Percentil Req?" is updated, the "Class Rank Percentile" is calculated and "Percentile Rec'd Date" is set for current date. (Note: If Percentile Required is flipped to "No", it removes the current percentile.)
+<dd>- If "GED %" is entered and the "High School Transcript Name" is set to "GED", the "Class Rank", "Class Size", "Class Rank Percentile" are cleared, "Percentile Req?" is set to "No", and the date is set for the current day. 
+<dt>Evaluations and Endorsements</dt>
+<dd>- As soon as data is entered into "Real Evaluation-Endorsement 1" or "Real Evaluation-Endorsement 2", the evaluation date is populated. As long as the date field is not empty, it will not repopulate.</dd>
+<dd>- The data entered into the "Real Evaluation-Endorsement 1" or "Real Evaluation-Endorsement 2" is copied to the shadow attribute, which is made read only.</dd>
+<dt>Dec of Intent / Ent Fee / Non-Enrolling Form</dt>
+<dd>- When the "Fall Ent Fee" date is populated, the "Fall Ent Fee" amount is populated with "50" to represent the $50 deposit. Clicking on the populated field will ask if you want to clear it, which woudl also clear the &quot;Fall Ent Fee&quot; amount. Must use the date picker to set the date. </dd>
+<dt>Interview Score Summary-Form</dt>
+<dd>- When the interview total is entered, if the total score is provided does not match the total of adding the questions together, the background of the field is colored red. If they match, it is colored green.</dd>
+<dt>International Apps Processing</dt>
+<dd>- When the "Intl App Status Indicator" is set for the first time, the "Intl App Processing Date" is populated with the current date.</dd>
+
+</dl>
+<a href="Changelog.txt"> View change log</a>
+<br/>
+</div>
+<div>
+<div id="bcBlueline" style="width:100%; height: 12px; height:12px; background-color:#005a8b;margin-top:30px;"></div>
+<div id="bcFooter" style="color:#005a8b; width:100%;min-height:80px; padding-bottom:20px; border-top: 8px solid #c75b12;background-image:url(images/bg_texture.png);background-repeat: repeat; background-position: top left;	background-attachment: scroll; text-align:center; font-size:12px;">
+  <ul class="site-info-school" style="list-style-type:none; text-align:center; padding-top:10px;">
+    <li style="display:inline;font-size:1.69em; font-weight:bold; font-family:Open Sans,sans-serif;">BEREA COLLEGE</li>
+    <li style="display:inline;font-size:1.69em; font-weight:bold; font-family:Open Sans,sans-serif;">BEREA, KY</li>
+    <li style="display:inline;font-size:1.69em; font-weight:bold; font-family:Open Sans,sans-serif;">1-800-326-5948</li>
+  </ul>
+  <ul class="site-info-school" id="site-info-consumer" style="list-style-type:none; text-align:center; padding-bottom:10px;">
+    <li style="display:inline;font-size:1.3em; font-weight:bold; font-family:Open Sans Condensed,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;"><a  style="text-decoration:none;color:#005a8b;" href="https://www.berea.edu/cisrk/"  target="_new">Consumer Information & Student Right to Know</a></li>
+  </ul>
+</div>
+</body>
+</html>

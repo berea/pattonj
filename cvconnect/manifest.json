@@ -1,0 +1,39 @@
+{
+
+  "manifest_version": 2,
+  "name": "Berea College Connect Autofill",
+  "version": "0.9.5",
+  "author": "Jacob Patton",
+  "description": "Used for Berea College's Connect instance to populate various fields.",
+
+  "icons": {
+    "48": "icons/berea_college_autofill_icon_48.png",
+	"96": "icons/berea_college_autofill_icon_96.png",
+	"128": "icons/berea_college_autofill_icon_128.png"
+  },  
+  
+  "permissions": [
+    "tabs"
+],
+  
+     "browser_action": {
+    "browser_style": true,
+	"default_icon": "icons/berea_college_autofill_icon_48.png",
+    "default_title": "Berea College Connect Autofill"
+  },
+  
+   "background": {
+    "scripts": ["about.js"]
+	},
+
+    "content_scripts": [
+    {
+      "matches": ["*://berea.askadmissions.net/admin/Contacts/*"],
+      "js": ["berea_college_connect_autofill.js"],
+	  "css":["berea_college_connect_autofill.css"]
+    }
+  ]
+  
+
+
+}	
