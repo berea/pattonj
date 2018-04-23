@@ -18,39 +18,68 @@ var attempts = 0; 		// Used to check how many attempts to load a view. Assumes t
 
 //on load, set main listener for dropdown view. 
 function setListener() {
+	
 	currentLocation = window.location.pathname;
 	if(currentLocation === "/admin/Contacts/Search" || currentLocation === "/admin/Contacts/View" || currentLocation === "/admin/Contacts/Edit"){
-		//set view listener
-		document.getElementById("contactViews").addEventListener("change", viewUpdate);
-		//Trigger once edit or new is clicked 
-		if(document.getElementById("editMode") !== null){
-			document.getElementById("editMode").addEventListener("click",viewUpdate);
-		} else if(document.getElementById("newMode") !== null){
-			document.getElementById("newMode").addEventListener("click",viewUpdate);
-		}
-		//Now run view change update
+		
+		//Replaced "contactViews", "editMode" and "newMode" event listeners with mutationObserver
+		//The "Loading" screen generally runs, but if you click "edit" or "view" from the search screen, it doesn't.
+		//Since the mutation observer wouldn't do any good, we need to run viewUpdate.
+		 loadingScreenMutationObserver();
+		 
+		//Now run view change update for the first time since they may go straight to edit mode. 
 		viewUpdate();
 	}
+	
+	
+
+}
+
+function loadingScreenMutationObserver(){
+	// Example for Mutaion Observer - https://www.javascripture.com/MutationObserver
+		var LSmutationObserver = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+				for (var i = 0; i < mutation.removedNodes.length; i++) {
+					if (mutation.removedNodes[i].className =="blockUI blockMsg blockElement"){
+					console.log("Loading Block Removed - Running viewUpdate");
+					viewUpdate();
+					}
+				}	
+	  
+			});
+		});
+				
+		// Starts listening for changes in the searchField HTML element of the page.
+		LSmutationObserver.observe(document.getElementById("searchFields"), {
+			attributes: false,
+			characterData: false,
+			childList: true,
+			subtree: true,
+			attributeOldValue: false,
+			characterDataOldValue: false
+		});
+// With the mutation observer, it loads the "Loading..." BlockUI box, removed the elements and HTML
+// then once ready, removes the "Loading... block" ("blockUI blockOverlay" and "blockUI blockMsg blockElement" and adds the new fields. 
 }
 
 //view change function
 function viewUpdate(reloaded){
-
+	console.log("View Update starting");
 	//Make sure we clear interval for the field if we are watching for a change. 
 	clearInterval(fieldInterval);
 	
 	//Used to reset attempts to zero since we are not just retrying the viewUpdate function. 
-	if(reloaded != true){
+	if(reloaded !== true){
 		attempts = 0;
 	}
 	
 	//Remove the BereaButton so we can recreate it if needed. 
-	if (document.getElementById('bereaButton') !== null){
+	if (document.contains(document.getElementById('bereaButton'))){
 		var oldButton = document.getElementById("bereaButton");
 		oldButton.remove();
 	}
 		
-	//Get the title of the selected dropdown value and remove * if needed. 
+	//Get the title of the selected dropdown value and remove * (default view symbol if needed. 
 	viewDropDownValue = document.getElementById("contactViews").options[document.getElementById("contactViews").selectedIndex].title;
 	if( viewDropDownValue.slice(-1)==="*"){
 		viewDropDownValue = viewDropDownValue.slice(0, -1);
@@ -83,24 +112,36 @@ function viewUpdate(reloaded){
 			break;
 			
 	}
-	
-	
+	console.log("View Update completed");
+		
 }
 
-//look for the field I need to edit to exist.
-//WE ASSUME IT EXISTS. - May be able to fix this later. 
+//look for the field I need to edit to exist. 
 function fieldWatch(myField,myFunction){
+	console.log("fieldwatch start");
 	//set loop looking for the field I passed to exist and be editable. 
 	fieldInterval = setInterval(function () {
-		if(document.getElementById(myField) !== null){
+		if(document.contains(document.getElementById(myField))){
 			if (document.getElementById(myField).disabled === false) {  
+	
 				//Once available and editable, stop looking and run the passed function. 
 				clearInterval(fieldInterval);
+				
+				console.log("Watched Field Found");
 				myFunction();
 			}
-		} 		
+			else{
+				// since it exists and isn't edible, stop watching. 
+				clearInterval(fieldInterval);
+			}
 		
-    }, 150);
+		} 	
+		else{
+			console.log("Watched field not found");
+		}
+		
+		
+    }, 100);
 }
 
 
@@ -171,20 +212,20 @@ function createCVItineraryButton() {
 	bereaButton.innerHTML = "<div class='BereaDropdown'>"+
 		"<input ID='Berea_Menu_Button' value='Berea Visits' class='BereaBlue bigbutton new' type='button' onclick='return false;'>"+
 	  "<div id='BereaMenu' class='BereaDropdown-content'>"+
-		"<a href='#' ID='AM_No_Lunch' onclick='return false;'>AM Session</a>"+
-		"<a href='#' ID='AM_With_Lunch' onclick='return false;'>AM Session (Lunch)</a>"+
-		"<a href='#' ID='PM_Session' onclick='return false;'>PM Session</a>"+
-		"<a href='#' ID='Midday_Session' onclick='return false;'>Midday Session</a>"+
+		//"<a href='#' ID='AM_No_Lunch' onclick='return false;'>AM Session</a>"+
+		//"<a href='#' ID='AM_With_Lunch' onclick='return false;'>AM Session (Lunch)</a>"+
+		//"<a href='#' ID='PM_Session' onclick='return false;'>PM Session</a>"+
+		//"<a href='#' ID='Midday_Session' onclick='return false;'>Midday Session</a>"+
 		"<a href='#' ID='Clear_Session'onclick='return false;' >Clear Sessions</a>"+
 	  "</div></div>";
 	var buttonRow = document.getElementsByClassName('triggerBtnsTop');
 	buttonRow[0].appendChild(bereaButton);
 	//Set even listeners "click" for the buttons above.
 	document.getElementById("Berea_Menu_Button").addEventListener("click",showCVItineraryMenu);
-	document.getElementById("AM_No_Lunch").addEventListener("click",function(){creatCVItinerary(1);});
-	document.getElementById("AM_With_Lunch").addEventListener("click",function(){creatCVItinerary(2);});
-	document.getElementById("PM_Session").addEventListener("click",function(){creatCVItinerary(3);});
-	document.getElementById("Midday_Session").addEventListener("click",function(){creatCVItinerary(4);});
+	//document.getElementById("AM_No_Lunch").addEventListener("click",function(){creatCVItinerary(1);});
+	//document.getElementById("AM_With_Lunch").addEventListener("click",function(){creatCVItinerary(2);});
+	//document.getElementById("PM_Session").addEventListener("click",function(){creatCVItinerary(3);});
+	//document.getElementById("Midday_Session").addEventListener("click",function(){creatCVItinerary(4);});
 	document.getElementById("Clear_Session").addEventListener("click",clearCVItinerary);
 	
 
@@ -493,15 +534,18 @@ function createCVReservationDateListener(){
 
 //pauses long enough wait for the date to be populated and then compare, and if needed set day. 
 function checkCVResDateChange(){
+	console.log("Focused out");
 	setTimeout( function(){
+	console.log("timeout set");	
 	if(document.getElementById("date602Date").value !==""){	
+	console.log("not empty");
 		var newVal = document.getElementById("date602Date").value;
 		//set loop looking for the field to exist and be editable.
 		if (visitDate === newVal) {  
-			//console.log("no change");
+			console.log("no change");
 			return;
 		 } else{
-			//console.log("change");
+			console.log("change");
 			visitDate = newVal;
 			//Grab date and update the field.
 			switch(new Date(document.getElementById("date602Date").value).getDay()){
@@ -531,23 +575,25 @@ function checkCVResDateChange(){
 			}	
 		}
 	}else{
+		console.log("empty");
 		document.getElementById("text4421").value = "";
 		visitDate="";
 	} 
-	},150);
+	},100);
 }
 
 //used to set the arrival time when session type is selected
 function setArrivalTime(){
 	switch (document.getElementById("text598").value){
 		case "Weekday Morning Session":
-			document.getElementById("text3381").value = "8:45 a.m.";
+			document.getElementById("text3381").value = "9:15 a.m.";
 			break;
-		case "Weekday Midday Session":
-			document.getElementById("text3381").value = "10:15 a.m.";
-			break;
+		//Midday session removed over summer	
+		//case "Weekday Midday Session":
+			//document.getElementById("text3381").value = "10:15 a.m.";
+			//break;
 		case "Weekday Afternoon Session":
-			document.getElementById("text3381").value = "1:15 p.m.";
+			document.getElementById("text3381").value = "1:45 p.m.";
 			break;
 		case "": // If they return to "select one", which is really blank. 
 			document.getElementById("text3381").value = "";
@@ -593,7 +639,7 @@ function setEEDate(EEName,EEDate,EEShadowName){
 
 //-----------//High School Transcript and Guidance Counselor View//-----------//
 function createHSTranscriptAndPercentListeners(){
-	if(checkViewFields(["numeric273","numeric277","text1415","text3265","hsname","text1501","numeric7963","date7349Date"])){
+	if(checkViewFields(["numeric273","numeric277","text1415","text3265","hsname","text1501","numeric7963","date7349Date","hscode"])){
 		checkHSTranscriptNameChange();
 		//Class Rank Field
 		document.getElementById("numeric273").addEventListener("input",setClassRankPercentile);
@@ -603,15 +649,20 @@ function createHSTranscriptAndPercentListeners(){
 		document.getElementById("text1415").addEventListener("change",setClassRankPercentile);
 		//GED% Field
 		document.getElementById("text3265").addEventListener("input",setGEDField);
+				
 	} else{
 		recheckViewFields();
 	}
 }
 
+//How do I handle ones where the name is already there? 
 //Looks for changes to HS Name and copies to HS transcript. 
 function checkHSTranscriptNameChange(){
 	highSchoolName = document.getElementById("hsname").value;
-			
+	console.log("HS transcript " + highSchoolName);		
+	if(highSchoolName !=="" && document.getElementById("hscode").value !== "" && document.getElementById("text1501").value ===""){
+		document.getElementById("text1501").value = highSchoolName;
+	}
 	//set loop looking for the field to exist and be editable.
 	//resused fieldInterval as it has been cleared when we are able to edit. 
 	fieldInterval = setInterval(function () {
@@ -628,6 +679,7 @@ function checkHSTranscriptNameChange(){
 	} 
 	},100);
 }
+
 
 //sets and checks the class rank percentile. 
 function setClassRankPercentile(){
@@ -674,17 +726,21 @@ function setGEDField(){
 
 //-----------//Dec of Intent / Ent Fee / Non-Enrolling View//-----------//
 function createFeeDateListener(){
+	
 	if(checkViewFields(["date2951Date","numeric2821"])){
+		console.log("dec starting");
 		feeDate = document.getElementById("date2951Date").value;
 		document.getElementById("date2951Date").addEventListener("click",function(){clearDateChange(document.getElementById("date2951Date"));});
 		document.getElementById("date2951Date").addEventListener("keydown",function(e){e.preventDefault(); alert("Please use your date picker to set the date.");});
 		document.getElementById("date2951Date").addEventListener("focusout",checkFeeDateChange);
+		console.log("dec ending");
 	} else{
 		recheckViewFields();
 	}
 }
 
-//Set fee amount, or clear the amount if the date is removed. 
+//Set fee amount, or clear the amount if the date is removed.
+//Not working when starting at view, then click edit on contact, then click calendar icon. How to fix this? 
 function checkFeeDateChange(){
 	
 	setTimeout( function(){
@@ -692,9 +748,10 @@ function checkFeeDateChange(){
 		var newVal = document.getElementById("date2951Date").value;
 		//set loop looking for the field to exist and be editable.
 		if (feeDate === newVal) {  
-			//console.log("no change");
+			console.log("No change");
 		 } else{
 			feeDate = newVal;
+			console.log("Fee date needed");
 			//set fee amount field
 			document.getElementById("numeric2821").value = "50";
 		}	

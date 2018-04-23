@@ -42,3 +42,12 @@ V0.9.5
 - About page only shows if logged into Berea Connect, otherwise a log in message appears when the icon is clicked. 
 - For Evaluation and endorsment view, it copies the name to the shadow attribute and makes the field read only. 
 - Checks to see if all required fields exist so the program doesn't crash. If it is unable to find a field multiple times, it shows and error. 
+
+V0.9.5.1
+- Testing the ability to update from college github account. 
+
+V0.9.5.1
+- Modified main script to use MutationOberserver instead of looking for changes to the view. This allows it to run the script more effeciently. 
+- Removed visit session options for summer use and until new schedule is set. 
+- Changed timeout for date changes as it was runnign before date was updated. 
+- Tweaked HSname to copy the name if HSname and HS code was not empty, but HS transcript name was. 
